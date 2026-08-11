@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Terminal - About Me</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-primary: #f3f3f3;
+            --text-secondary: #888888;
+            --terminal-bg: #000000;
+            --terminal-border: #333333;
+            --accent-pink: #ff2a7a;
+            --accent-cyan: #00e5ff;
+            --accent-yellow: #ffdd00;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .hero-title {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+        }
+
+        .hero-subtitle {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .terminal-wrapper {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            padding: 20px;
+        }
+
+        .easter-egg-doodle {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-pink);
+            border-radius: 50% 50% 0 0;
+            z-index: 0;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(100%);
+        }
+
+        .easter-egg-doodle.peek {
+            transform: translateY(-40px);
+        }
+
+        .terminal-container {
+            width: 100%;
+            height: 450px;
+            background-color: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .crt-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.4) 50%
+            );
+            background-size: 100% 4px;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.95);
+        }
+
+        .glass-glare {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0.03) 45%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            pointer-events: none;
+            z-index: 21;
+            transform: rotate(-15deg);
+        }
+
+        .faulty-crt {
+            animation: crtFlicker 0.15s infinite;
+            text-shadow:
+                1.5px 0 0.5px rgba(255, 42, 122, 0.5),
+                -1.5px 0 0.5px rgba(0, 229, 255, 0.5);
+        }
+
+        @keyframes crtFlicker {
+            0% { opacity: 0.95; }
+            50% { opacity: 1; filter: brightness(1.05); }
+            100% { opacity: 0.92; }
+        }
+
+        .terminal-screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            animation: textShadow 1.6s infinite;
+            text-shadow: 0.5px 0 1px rgba(255,255,255,0.2);
+        }
+
+        @keyframes textShadow {
+            0% { text-shadow: 0.5px 0 1px rgba(255,255,255,0.1); }
+            50% { text-shadow: 0.5px 0 1px rgba(255,255,255,0.3); }
+            100% { text-shadow: 0.5px 0 1px rgba(255,255,255,0.1); }
+        }
+
+        .terminal-container.glow-pink {
+            box-shadow: 0 0 40px rgba(255, 42, 122, 0.25);
+            border-color: rgba(255, 42, 122, 0.5);
+        }
+        .terminal-container.glow-cyan {
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.25);
+            border-color: rgba(0, 229, 255, 0.5);
+        }
+
+        .terminal-body {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-right: 2rem;
+        }
+
+        .terminal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        .terminal-body::-webkit-scrollbar-track {
+            background: var(--terminal-bg);
+        }
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: var(--terminal-border);
+            border-radius: 4px;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .prompt-symbol {
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+            flex-grow: 1;
+            caret-color: var(--text-primary);
+        }
+
+        .syntax-keyword { color: var(--accent-pink); }
+        .syntax-string { color: var(--accent-yellow); }
+        .syntax-function { color: var(--accent-cyan); }
+        .syntax-comment { color: var(--text-secondary); font-style: italic; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background-color: var(--text-secondary);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        .hidden { display: none !important; }
+
+        .cmd-button {
+            border: 1px solid var(--terminal-border);
+            background: var(--terminal-bg);
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+        .cmd-button:hover {
+            color: var(--text-primary);
+            border-color: var(--text-secondary);
+        }
+
+        .terminal-body, .terminal-input, .prompt-symbol {
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <header class="w-full max-w-[900px] mb-8 mt-12">
+        <div class="flex flex-col items-center">
+            <div class="w-full flex justify-center flex-col items-center relative">
+                <span class="hero-subtitle text-xs md:text-sm text-gray-400 absolute left-0 top-0 md:-top-4">MYSELF,</span>
+                <h1 class="hero-title text-5xl md:text-8xl lg:text-[110px] text-white tracking-tighter">
+                    MANNAN KOCHAR
+                </h1>
+                <span class="hero-subtitle text-xs md:text-sm text-gray-400 absolute right-0 -bottom-6">
+                    [CREATIVE DEVELOPER // MUMBAI]
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-225 flex flex-col items-center mt-16">
+
+        <div id="trigger-container" class="flex flex-col items-center gap-4 transition-opacity duration-300">
+            <p class="text-sm text-gray-500">Want to know more?</p>
+            <button id="open-terminal-btn" class="cmd-button font-mono px-4 py-2 rounded text-sm flex items-center gap-2">
+                Press <kbd class="bg-[#222] px-2 py-1 rounded text-xs border border-[#444]">Ctrl</kbd> + <kbd class="bg-[#222] px-2 py-1 rounded text-xs border border-[#444]">K</kbd>
+            </button>
+        </div>
+
+        <div id="terminal-wrapper" class="terminal-wrapper hidden">
+            <div id="doodle" class="easter-egg-doodle flex items-center justify-center font-bold text-black text-xs">O_O</div>
+
+            <div id="terminal-container" class="terminal-container font-mono text-sm">
+                <div class="crt-overlay"></div>
+                <div class="glass-glare"></div>
+
+                <div class="terminal-screen">
+                    <div class="h-8 border-b border-[#333] flex items-center px-4 gap-2 bg-[#050505] relative z-30">
+                        <div class="w-3 h-3 rounded-full bg-[#333]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#333]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#333]"></div>
+                        <span class="ml-auto text-xs text-gray-600">guest@mannan: ~</span>
+                    </div>
+
+                    <div id="terminal-output" class="terminal-body relative z-30 faulty-crt">
+                        <div class="text-gray-500 mb-4">
+                            Type <span class="syntax-keyword">'help'</span> to see available commands.
+                        </div>
+                    </div>
+
+                    <div class="border-t border-[#333] p-3 px-4 bg-[#0a0a0a] flex items-center relative z-30 faulty-crt">
+                        <span class="prompt-symbol mr-2">❯</span>
+                        <span id="package-manager" class="text-gray-500 mr-2 select-none cursor-pointer hover:text-white transition-colors" title="Click to change package manager">npm</span>
+                        <input type="text" id="cmd-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const triggerContainer = document.getElementById('trigger-container');
+        const terminalWrapper = document.getElementById('terminal-wrapper');
+        const openTerminalBtn = document.getElementById('open-terminal-btn');
+        const terminalContainer = document.getElementById('terminal-container');
+        const terminalOutput = document.getElementById('terminal-output');
+        const cmdInput = document.getElementById('cmd-input');
+        const packageManagerEl = document.getElementById('package-manager');
+        const doodle = document.getElementById('doodle');
+
+        let isTerminalOpen = false;
+        let runDevCount = 0;
+        let packageManagers = ['npm', 'pnpm', 'yarn'];
+        let currentPmIndex = 0;
+
+        const commands = {
+            'help': {
+                execute: () => `
+                    <div class="grid grid-cols-[100px_1fr] gap-2 mt-2">
+                        <span class="syntax-function">about</span>   <span class="text-gray-400">Read my bio</span>
+                        <span class="syntax-function">skills</span>  <span class="text-gray-400">View tech stack</span>
+                        <span class="syntax-function">contact</span> <span class="text-gray-400">Get my email</span>
+                        <span class="syntax-function">clear</span>   <span class="text-gray-400">Clear terminal</span>
+                    </div>
+                    <div class="syntax-comment mt-2">// Hint: try standard node commands too...</div>
+                `
+            },
+            'about': {
+                execute: () => `
+                    <div class="mt-2 leading-relaxed">
+                        Hi, I'm <span class="syntax-keyword">Mannan</span>.<br>
+                        I'm a final year engineering student at Atharva College, Mumbai.<br>
+                        I specialize in <span class="syntax-string">"Design Engineering"</span>—bridging the gap between static design and interactive code.<br>
+                        I love building complex UI architectures and butter-smooth GSAP animations.
+                    </div>
+                `
+            },
+            'skills': {
+                execute: () => `
+                    <div class="mt-2">
+                        <span class="syntax-keyword">const</span> <span class="syntax-function">stack</span> = [
+                            <span class="syntax-string">"React"</span>, <span class="syntax-string">"Next.js"</span>, <span class="syntax-string">"TypeScript"</span>,
+                            <span class="syntax-string">"GSAP"</span>, <span class="syntax-string">"Three.js"</span>, <span class="syntax-string">"Tailwind"</span>
+                        ];
+                    </div>
+                `
+            },
+            'contact': {
+                execute: () => `
+                    <div class="mt-2">
+                        Email: <a href="mailto:hello@mannan.dev" class="text-white hover:underline">hello@mannan.dev</a><br>
+                        LinkedIn: <a href="#" class="text-white hover:underline">/in/mannankochar</a>
+                    </div>
+                `
+            }
+        };
+
+        packageManagerEl.addEventListener('click', () => {
+            currentPmIndex = (currentPmIndex + 1) % packageManagers.length;
+            packageManagerEl.textContent = packageManagers[currentPmIndex];
+            cmdInput.focus();
+        });
+
+        const openTerminal = () => {
+            if (isTerminalOpen) return;
+            isTerminalOpen = true;
+            triggerContainer.classList.add('hidden');
+            terminalWrapper.classList.remove('hidden');
+
+            terminalContainer.style.opacity = '0';
+            terminalContainer.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                terminalContainer.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                terminalContainer.style.opacity = '1';
+                terminalContainer.style.transform = 'translateY(0)';
+                cmdInput.focus();
+            }, 50);
+        };
+
+        openTerminalBtn.addEventListener('click', openTerminal);
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                openTerminal();
+            }
+        });
+
+        terminalOutput.addEventListener('click', () => {
+            if (window.getSelection().toString() === "") {
+                cmdInput.focus();
+            }
+        });
+
+        cmdInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const rawInput = cmdInput.value.trim();
+                const pm = packageManagers[currentPmIndex];
+                const isJustPm = rawInput === "";
+                const commandToProcess = isJustPm ? pm : rawInput.toLowerCase();
+
+                cmdInput.value = '';
+
+                printToTerminal(`<span class="prompt-symbol">❯</span> <span class="text-gray-500">${pm}</span> ${rawInput}`, false);
+
+                if (!commandToProcess && !isJustPm) return;
+
+                processCommand(commandToProcess, pm);
+            }
+        });
+
+        function printToTerminal(html, isOutput = true) {
+            const line = document.createElement('div');
+            line.className = isOutput ? 'mb-4' : 'input-row';
+            line.innerHTML = html;
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        function triggerGlow(type) {
+            terminalContainer.classList.remove('glow-pink', 'glow-cyan');
+            void terminalContainer.offsetWidth;
+            terminalContainer.classList.add(`glow-${type}`);
+
+            setTimeout(() => {
+                terminalContainer.classList.remove(`glow-${type}`);
+            }, 1500);
+        }
+
+        function triggerDoodle() {
+            doodle.classList.add('peek');
+            setTimeout(() => {
+                doodle.classList.remove('peek');
+            }, 2000);
+        }
+
+        function processCommand(cmd, pm) {
+            if (cmd === 'run dev' || cmd === 'dev') {
+                runDevCount++;
+                if (runDevCount >= 5) {
+                    printToTerminal(`<span class="syntax-string">Warning: Mannan is extremely tired. Please consider 'npm run sleep'.</span>`);
+                    triggerGlow('pink');
+                    triggerDoodle();
+                } else {
+                    printToTerminal(`<span class="syntax-keyword">Success:</span> Mannan ran ${runDevCount}km.`);
+                    triggerGlow('cyan');
+                }
+                return;
+            }
+
+            if (cmd === 'i' || cmd === 'install') {
+                printToTerminal(`
+                    <div class="text-gray-400">
+                        > Fetching resume.pdf...<br>
+                        > Extracting skills...<br>
+                        <span class="syntax-keyword">Done!</span>
+                        <a href="#" class="syntax-string underline ml-2">Click here to download</a>
+                    </div>
+                `);
+                triggerGlow('cyan');
+                return;
+            }
+
+            if (cmd === 'clear') {
+                terminalOutput.innerHTML = '';
+                return;
+            }
+
+            if (commands[cmd]) {
+                printToTerminal(commands[cmd].execute());
+                triggerGlow('cyan');
+            } else {
+                printToTerminal(`<span class="text-red-500">Error:</span> Command '${cmd}' not found. Type 'help' for options.`);
+            }
+        }
+    </script>
+</body>
+</html>
