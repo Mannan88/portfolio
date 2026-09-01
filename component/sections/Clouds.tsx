@@ -1,3 +1,4 @@
+"use client";
 import Sprite from "../hero/SpriteTemplate";
 const SCALE = 8
 export default function Clouds() {

@@ -1,3 +1,4 @@
+"use client";
 import Clouds from "@/component/sections/Clouds";
 import Curious from "@/component/sections/Curious";
 export default function Home() {

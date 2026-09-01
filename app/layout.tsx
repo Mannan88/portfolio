@@ -45,7 +45,7 @@ export default function RootLayout({
       lang="en"
       className={`antialiased scroll-smooth`}
     >
-      <body className="bg-(--bg-color) text-[#0E0E0E] relative">
+      <body className="bg-(--bg-color) text-[#0E0E0E] relative cursor-none">
 
         <Navbar />
         <main>
