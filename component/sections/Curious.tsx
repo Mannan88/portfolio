@@ -53,10 +53,8 @@ export default function Curious() {
 
       const animateHeroIn = () => {
         if (hasAnimatedIn.current) return;
-
         const elements = heroRef.current?.children;
         if (!elements) return;
-
         hasAnimatedIn.current = true;
 
         gsap.to(elements, {
