@@ -1,37 +1,33 @@
+// data/stages.ts
 export const STAGES = [
   {
     title: "Purpose",
-    desc: "Every build starts with a question, not a tool. I dig into the actual problem, who it's for, and what it needs to feel like before a single line of code exists.",
-    color: "text-red-500",
+    desc: "Every build starts with a question, not a tool. Before any code exists I dig into who this is actually for, what problem it removes from their day, and what the end result needs to feel like when it works. Skipping this step is the fastest way to build something technically correct and practically useless.",
+    color: "bg-red-500",
   },
   {
     title: "Ideation",
-    desc: "Concepts get sketched wide and loose here. I explore multiple directions in parallel, letting rough ideas collide before narrowing toward the one worth building.",
-    color: "text-orange-500",
+    desc: "Concepts get sketched wide and loose here, on purpose. I deliberately explore more directions than I'll ever use, letting rough half-formed ideas sit next to each other and compete. Most get thrown out. The point isn't to find the answer immediately, it's to make sure the one I pick actually beat something.",
+    color: "bg-orange-500",
   },
   {
     title: "Resources",
-    desc: "Every project has real limits — time, tooling, performance budgets. I map those constraints early so the plan that follows is grounded, not aspirational.",
-    color: "text-yellow-500",
+    desc: "Every project runs inside real constraints — time, tooling, performance budgets, team size. I map those boundaries early so the plan that follows is grounded in what's actually buildable, not a wishlist that quietly collapses two weeks before launch. Constraints found late are just rework found early.",
+    color: "bg-yellow-500",
   },
   {
     title: "Planning",
-    desc: "Ideas become structure. I break the work into concrete steps, define the architecture, and decide what order things need to happen in to avoid rework later.",
-    color: "text-green-500",
-  },
-  {
-    title: "Marshal",
-    desc: "Before building begins in earnest, I gather everything the work will lean on — references, prototypes, and small technical experiments that de-risk the harder parts ahead.",
-    color: "text-blue-500",
+    desc: "Ideas become structure here. I break the work into concrete, ordered steps, define the architecture that will hold it all up, and decide what has to happen before what. Sequencing matters as much as scope — most rework I've seen wasn't from a bad idea, it was from doing things in the wrong order.",
+    color: "bg-green-500",
   },
   {
     title: "Create",
-    desc: "This is where the plan meets reality. I build in tight loops, testing early and often, adjusting course the moment something doesn't feel or perform right.",
-    color: "text-indigo-500",
+    desc: "This is where the plan meets reality, in tight loops. I build a slice, test it immediately, and adjust the moment something doesn't feel or perform right — rather than building the whole thing blind and debugging it at the end. Momentum matters, but not more than catching a wrong turn early.",
+    color: "bg-indigo-500",
   },
   {
     title: "Polish",
-    desc: "The last mile is where craft actually shows. I refine motion, spacing, and detail until the work feels intentional in every corner, not just functionally done.",
-    color: "text-violet-500",
+    desc: "The last mile is where craft actually shows up. I refine motion curves, spacing, timing, and the dozen tiny details nobody consciously notices but everybody feels. This is what separates something that works from something that feels considered — and it's usually the step that gets cut first when it shouldn't be.",
+    color: "bg-violet-500",
   },
-];
+]

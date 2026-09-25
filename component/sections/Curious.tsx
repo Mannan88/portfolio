@@ -243,6 +243,7 @@ export default function Curious() {
 
   return (
     <section
+      id="curious"
       ref={sectionRef}
       className="w-full min-h-dvh flex flex-col gap-8 items-center p-6 md:p-12 mt-8 relative overflow-hidden"
     >
