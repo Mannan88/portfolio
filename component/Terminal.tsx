@@ -1,8 +1,14 @@
+// components/.../Terminal.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 
 const PACKAGE_MANAGERS = ["npm", "pnpm", "yarn"] as const;
+
+// VIBGYOR, used across commands instead of a single accent pair —
+// each command family gets its own color rather than everything
+// funneling into one "success" / "error" binary.
+export type GlowColor = "violet" | "indigo" | "blue" | "green" | "yellow" | "orange" | "red";
 
 type Line =
   | { id: number; type: "command"; pm: string; raw: string }
@@ -10,9 +16,13 @@ type Line =
 
 interface TerminalProps {
   onClose: () => void;
-  onGlowChange: (type: "pink" | "cyan" | null) => void;
+  onGlowChange: (type: GlowColor | null) => void;
   onDoodleTrigger: () => void;
 }
+
+// Colors a "dev" run cycles through — different each time, rather than
+// always landing on the same accent.
+const DEV_RUN_COLORS: GlowColor[] = ["green", "blue", "violet"];
 
 export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: TerminalProps) {
   const [pmIndex, setPmIndex] = useState(0);
@@ -29,10 +39,6 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
   const pm = PACKAGE_MANAGERS[pmIndex];
 
   useEffect(() => {
-    // preventScroll: true stops the browser from scrolling this input
-    // into view when it mounts/focuses — without it, the page jumps to
-    // this section on load since Terminal is mounted (just visually
-    // collapsed) even before the terminal is opened.
     inputRef.current?.focus({ preventScroll: true });
   }, []);
 
@@ -66,14 +72,12 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
             <span class="syntax-function">about</span>   <span class="text-gray-400">Read my bio</span>
             <span class="syntax-function">skills</span>  <span class="text-gray-400">View tech stack</span>
             <span class="syntax-function">contact</span> <span class="text-gray-400">Socials</span>
-            <span class="syntax-function">build</span>   <span class="text-gray-400">Run production build</span>
-            <span class="syntax-function">test</span>    <span class="text-gray-400">Run test suites</span>
-            <span class="syntax-function">lint</span>    <span class="text-gray-400">Check code quality</span>
             <span class="syntax-function">clear</span>   <span class="text-gray-400">Clear terminal</span>
+            <span class="text-slate-500 w-200">you can also try standard npm commands :D</span>
           </div>
         `,
       });
-      onGlowChange("cyan");
+      onGlowChange("blue");
       return;
     }
 
@@ -84,12 +88,12 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
           <div class="mt-2 leading-relaxed">
             Hi, I'm <span class="syntax-keyword">Mannan</span>.<br>
             I'm a final year engineering student at Atharva College, Mumbai.<br>
-            I specialize in <span class="syntax-string">"Design Engineering"</span>—bridging static design and interactive code.<br>
-            I love building complex UI architectures and butter-smooth GSAP animations.
+            I specialize in <span class="syntax-string">Design Engineering</span>, which is to bridge the gap between static design and interactive code.<br>
+            I love building complex UI architectures and butter-smooth GSAP animations. My hobbies revolve around creatives and doodles, and I strive to channel my creativity into my work.
           </div>
         `,
       });
-      onGlowChange("cyan");
+      onGlowChange("indigo");
       return;
     }
 
@@ -98,14 +102,13 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
         type: "result",
         html: `
           <div class="mt-2">
-            <span class="syntax-keyword">const</span> <span class="syntax-function">stack</span> = [
-              <span class="syntax-string">"React"</span>, <span class="syntax-string">"Next.js"</span>, <span class="syntax-string">"TypeScript"</span>,
-              <span class="syntax-string">"GSAP"</span>, <span class="syntax-string">"Three.js"</span>, <span class="syntax-string">"Tailwind"</span>
+            <span class="syntax-keyword">const</span> <span class="syntax-function">stack</span> = [<span class="syntax-string">"Next.js"</span>, <span class="syntax-string">"ReactJS"</span>, <span class="syntax-string">"TypeScript"</span>,
+              <span class="syntax-string">"GSAP"</span>, <span class="syntax-string">"Three.js"</span>, <span class="syntax-string">"Tailwind"</span>, <span class="syntax-string">"Figma & Canva"</span>
             ];
           </div>
         `,
       });
-      onGlowChange("cyan");
+      onGlowChange("violet");
       return;
     }
 
@@ -114,22 +117,26 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
         type: "result",
         html: `
           <div class="mt-2">
-            Email: <a href="mailto:hello@mannan.dev" class="text-white hover:underline">hello@mannan.dev</a><br>
-            LinkedIn: <a href="#" class="text-white hover:underline">/in/mannankochar</a>
+            Email: <a target="_blank" href="mailto:kocharmanan88@gmail.com" class="text-white hover:underline">kocharmanan88@gmail.com</a>
+            <br>
+            LinkedIn: <a target="_blank" href="https://www.linkedin.com/in/mannan-kochar-74bb75270/" class="text-white hover:underline">Mannan Kochar</a>
+            <br>
+            Github: <a target="_blank" href="https://www.github.com/Mannan88" class="text-white hover:underline">Mannan88</a>
           </div>
         `,
       });
-      onGlowChange("cyan");
+      onGlowChange("green");
       return;
     }
 
-    // Dynamic Multi-step Real Terminal Build Simulation
+    // Dynamic multi-step build simulation — kept, since a failing build with
+    // a real reason is a decent joke on its own without needing test/lint too.
     if (cmd === "build") {
       print({
         type: "result",
         html: `<div class="text-yellow-400 mt-2">> Building production optimized bundle...</div>`,
       });
-      onGlowChange("cyan");
+      onGlowChange("yellow");
 
       const progressId = lineIdRef.current++;
       setLines((prev) => [...prev, { id: progressId, type: "result", html: `[░░░░░░░░░░] 0% compiling...` }]);
@@ -143,14 +150,14 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
       }, 1400);
 
       setTimeout(() => {
-        onGlowChange("pink");
+        onGlowChange("red");
         print({
           type: "result",
           html: `
             <div class="text-red-400 mt-2 font-mono">
               <span class="text-red-500 font-bold">Failed to compile.</span><br>
               Error: Type 'any' is not assignable to type 'never'.<br>
-              <span class="text-gray-500">// We love TypeScript don't we. </span>
+              <span class="text-gray-500">// We love Typescript don't we :).</span>
             </div>
           `,
         });
@@ -158,40 +165,55 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
       return;
     }
 
-    if (cmd === "test") {
-      print({
-        type: "result",
-        html: `<div class="text-green-400 mt-2">✓ 42 tests passed. <span class="text-gray-500">(Don't look too closely, they're all expect(true).toBe(true))</span></div>`,
-      });
-      onGlowChange("cyan");
-      return;
-    }
-
-    if (cmd === "lint") {
-      print({
-        type: "result",
-        html: `<div class="text-red-400 mt-2">✖ 8,342 problems (8,342 errors, 0 warnings). <span class="text-gray-500">Add // eslint-disable-next-line and walk away.</span></div>`,
-      });
-      onGlowChange("pink");
-      return;
-    }
-
     if (cmd === "run dev" || cmd === "dev") {
       runDevCount.current += 1;
+
       if (runDevCount.current >= 4) {
         print({
           type: "result",
-          html: `<span class="syntax-string mt-2 block">Warning: Mannan is exhausted. Please run 'npm run sleep' immediately.</span>`,
+          html: `<span class="syntax-string mt-2 block">Warning: Mannan is exhausted. He needs 'sleep'.</span>`,
         });
-        onGlowChange("pink");
+        onGlowChange("orange");
         onDoodleTrigger();
       } else {
+        const color = DEV_RUN_COLORS[(runDevCount.current - 1) % DEV_RUN_COLORS.length];
         print({
           type: "result",
-          html: `<span class="syntax-keyword mt-2 block">Success:</span> Mannan completed another coffee sprint (${runDevCount.current}x).`,
+          html: `<span class="syntax-keyword mt-2 block">Success:</span> Mannan ran ${runDevCount.current}km(s).`,
         });
-        onGlowChange("cyan");
+        onGlowChange(color);
       }
+      return;
+    }
+
+    if (cmd === "sleep" || cmd === "npm run sleep") {
+      runDevCount.current = 0;
+      print({
+        type: "result",
+        html: `Mannan is sleeping.<span class="syntax-function mt-2 block">Zzz...</span>`,
+      });
+
+      setTimeout(() => {
+        print({
+          type: "result",
+          html: `<span class="syntax-function mt-2 block">Zzz...Zzz...</span>`,
+        });
+      }, 600);
+
+      setTimeout(() => {
+        print({
+          type: "result",
+          html: `<span class="syntax-function mt-2 block">Zzz...Zzz...Zzz...</span>`,
+        });
+      }, 1400);
+      setTimeout(() => {
+        print({
+          type: "result",
+          html: `<span class="syntax-function mt-2 block">He sure loves sleeping.</span>`,
+        });
+      }, 2400);
+
+      onGlowChange("indigo");
       return;
     }
 
@@ -200,7 +222,7 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
       type: "result",
       html: `<span class="text-red-500 mt-2 block">Error:</span> Command '${cmd}' not recognized. Type 'help'.`,
     });
-    onGlowChange("pink");
+    onGlowChange("red");
   }
 
   function handleInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -218,13 +240,12 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
   }
 
   function cyclePackageManager() {
-    setPmIndex((i) => (i + 1) / PACKAGE_MANAGERS.length);
+    setPmIndex((i) => (i + 1) % PACKAGE_MANAGERS.length);
     inputRef.current?.focus();
   }
 
   return (
     <div className="terminal-screen rounded-lg overflow-hidden border border-[#333] shadow-2xl bg-black">
-      {/* Top Titlebar */}
       <div className="h-8 border-b border-[#333] flex items-center px-4 gap-2 bg-[#050505] relative z-30">
         <div
           className="w-3 h-3 rounded-full bg-red-500/80 cursor-pointer hover:bg-red-400 transition-colors"
@@ -236,7 +257,6 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
         <span className="ml-auto text-xs text-gray-600">guest@mannan: ~</span>
       </div>
 
-      {/* Terminal Output */}
       <div
         ref={outputRef}
         onClick={() => window.getSelection()?.toString() === "" && inputRef.current?.focus()}
@@ -255,7 +275,6 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
         )}
       </div>
 
-      {/* Input Bar */}
       <div className="border-t border-[#333] p-3 px-4 bg-[#050505] flex items-center relative z-30 faulty-crt">
         <span className="prompt-symbol mr-2 text-green-400">❯</span>
         <span

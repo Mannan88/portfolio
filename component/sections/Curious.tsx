@@ -5,15 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Flip } from "gsap/Flip";
-import Terminal from "../Terminal";
-import HalftoneBackground from "../backgrounds/halftone-bg/HalfToneBg";
-
+import Terminal, { type GlowColor } from "../Terminal";
 gsap.registerPlugin(useGSAP, Flip);
 
 export default function Curious() {
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [startTyping, setStartTyping] = useState(false);
-  const [glow, setGlow] = useState<"pink" | "cyan" | null>(null);
+const [glow, setGlow] = useState<GlowColor | null>(null);
 
   const sectionRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -31,8 +29,6 @@ export default function Curious() {
 
   useGSAP(
     () => {
-      const targetHeight = terminalContainerRef.current?.offsetHeight;
-
       const heroElements = heroRef.current?.children;
       const wrapper = terminalWrapperRef.current;
 
@@ -223,7 +219,7 @@ export default function Curious() {
     };
   }, []);
 
-  const handleGlowChange = (type: "pink" | "cyan" | null) => {
+  const handleGlowChange = (type: GlowColor | null) => {
     if (glowTimeout.current) {
       clearTimeout(glowTimeout.current);
     }
@@ -240,22 +236,20 @@ export default function Curious() {
       }, 1500);
     }
   };
-
   return (
-    <section
-      id="curious"
-      ref={sectionRef}
-      className="w-full min-h-dvh flex flex-col gap-8 items-center p-6 md:p-12 mt-8 relative overflow-hidden"
-    >
-      <div
-        ref={heroRef}
-        className="flex flex-col items-center text-center relative z-10"
-      >
+  <section
+    id="curious"
+    ref={sectionRef}
+    className="relative w-full h-[180vh]"
+  >
+    <div className="sticky top-0 h-dvh flex flex-col items-center p-6 md:p-12 overflow-hidden">
+
+      <div ref={heroRef}>
         <span className="hero-subtitle text-start text-xs md:text-sm font-normal text-[#f4f4f4] mb-2">
           MYSELF,
         </span>
 
-        <h1 className="hero-title text-5xl font-normal md:text-8xl text-[#f4f4f4]">
+        <h1 className="hero-title text-6xl font-normal md:text-8xl text-[#f4f4f4]">
           MANNAN KOCHAR
         </h1>
 
@@ -292,7 +286,7 @@ export default function Curious() {
 
       <div
         ref={terminalWrapperRef}
-        className="terminal-wrapper relative w-full max-w-4xl overflow-hidden z-0 cursor-default"
+        className="terminal-wrapper relative w-full max-w-4xl overflow-hidden z-0 mt-8 cursor-default"
       >
         <div
           ref={terminalContainerRef}
@@ -310,8 +304,8 @@ export default function Curious() {
             onDoodleTrigger={() => {}}
           />
         </div>
-      </div>
-      <HalftoneBackground gridSize={64} radius={0.12} bgColor="#1e1e1e" dotColor="#717174" />
+        </div>
+    </div>
     </section>
   );
 }

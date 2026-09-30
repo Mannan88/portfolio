@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { PROJECTS, textColorFor } from "@/data/projects"
+import Link from "next/link"
 
 // index 0 of a row's color array = highest z-index = final visible color (see notes above)
 const LAYER_Z_INDEX = ["z-40", "z-30", "z-20", "z-10"]
@@ -107,7 +108,8 @@ export default function Creations() {
   }
 
   return (
-    <section id="creations" className="relative w-full min-h-dvh">
+    <section id="creations" className="relative w-full h-[180vh]">
+      <div className="sticky top-0 h-dvh flex flex-col items-center p-6 md:p-12 overflow-hidden">
       <div className="h-48 flex mx-auto w-fit items-center">
         <h1 className="text-7xl text-center items-center">Projects</h1>
       </div>
@@ -124,11 +126,12 @@ export default function Creations() {
           const activeText = textColorFor(project.colors[0])
 
           return (
-            <div
+            <Link
+              href={`/${project.slug}`}
               key={project.id}
               onMouseEnter={() => handleRowEnter(index)}
               onMouseLeave={() => handleRowLeave(index)}
-              className="relative h-24 w-full max-w-6xl mx-auto overflow-hidden border-t border-white/20 last:border-b cursor-pointer"
+              className="relative block h-24 w-full max-w-6xl mx-auto overflow-hidden border-t border-white/20 last:border-b cursor-pointer"
             >
               {/* Stacked color layers, index 0 on top */}
               {project.colors.map((color, layerIndex) => (
@@ -170,16 +173,17 @@ export default function Creations() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
 
         {/* Cursor-following preview, hover-scoped only to this section via listRef handlers above */}
         <div
           ref={floatingRef}
-          className="pointer-events-none absolute top-0 left-0 z-50 h-40 w-64 overflow-hidden rounded-lg shadow-lg">
+          className="pointer-events-none absolute top-0 left-0 z-50 h-45 w-80 overflow-hidden rounded-lg shadow-lg border-white">
           <img ref={imgARef} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <img ref={imgBRef} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        </div>
         </div>
       </div>
     </section>

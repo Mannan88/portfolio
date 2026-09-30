@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/component/shared/Navbar";
+import HalftoneBackground from "@/component/backgrounds/halftone-bg/HalfToneBg";
 
 export const metadata: Metadata = {
   title: {
@@ -46,12 +47,10 @@ export default function RootLayout({
       className={`antialiased scroll-smooth`}
     >
       <body className="bg-(--bg-color) text-[#0E0E0E] relative cursor-none">
-
-        <Navbar />
-        <main>
-          {children}
-        </main>
-
+        <HalftoneBackground gridSize={64} radius={0.12} bgColor="#1e1e1e" dotColor="#717174">
+          <Navbar />
+          <main>{children}</main>
+        </HalftoneBackground>
       </body>
     </html>
   );

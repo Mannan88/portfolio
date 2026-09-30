@@ -12,6 +12,7 @@ type HalftoneBackgroundProps = {
   bgColor?: string;
   dotColor?: string;
   interactive?: boolean;
+  children?: React.ReactNode;
 };
 
 export default function HalftoneBackground({
@@ -20,6 +21,7 @@ export default function HalftoneBackground({
   bgColor = "#1a1a1a",
   dotColor = "#ffffff",
   interactive = true,
+  children,
 }: HalftoneBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -129,9 +131,15 @@ export default function HalftoneBackground({
   }, [gridSize, radius, bgColor, dotColor, interactive]);
 
   return (
-    <div
-      ref={containerRef}
-      className="fixed inset-0 -z-10 h-full w-full overflow-hidden pointer-events-none"
-    />
+    <>
+      {/* Fixed + -z-10 takes this out of normal flow entirely, so it always sits
+          behind whatever is passed as children regardless of DOM order — that's
+          what makes it safe to render children as a plain sibling right after it. */}
+      <div
+        ref={containerRef}
+        className="fixed inset-0 -z-10 h-full w-full overflow-hidden pointer-events-none"
+      />
+      {children}
+    </>
   );
 }

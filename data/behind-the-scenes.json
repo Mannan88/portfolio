@@ -1,0 +1,25 @@
+{
+  "title": "Behind the Scenes",
+  "tagline": "How this portfolio was built.",
+  "date": "2026-01-10",
+  "url": "/",
+  "images": [
+    "/bts/1.jpg",
+    "/bts/2.jpg",
+    "/bts/3.jpg"
+  ],
+  "content": [
+    {
+      "heading": "Why This Exists",
+      "body": "Being into art and creatives since childhood and now into development, I have made several attempts of making my own protfolio. I have always wanted to make one of those cool and stunning portfolio websites which I have been seeing since years, but wsa never able to complete one. But this time I am glad that I was able to complete this one."
+    },
+    {
+      "heading": "The Process",
+      "body": "I love when websites show more when interacted with. Hence I wanted to reflect that, and make sure that user's time spent on my portfolio website is absolutely worth it. Hence I planned a lot for this portfolio, thought about how the website should feel, what it should convey, and how the sections would look like. I started with the planning of sections, and what each would display. Starting with hero section, I had that one in my mind, that I wanted to show the word 'PORTFOLIO' and make each letter interactable. Going "
+    },
+    {
+      "heading": "What's Next",
+      "body": "Where this is headed."
+    }
+  ]
+}

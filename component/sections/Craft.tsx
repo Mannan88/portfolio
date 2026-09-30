@@ -99,8 +99,7 @@ export default function Craft() {
                 <div className={` ${stage.color} px-4`}>
                 <h2 className="text-[#1a1a1a] text-6xl font-normal leading-none tracking-tight transition-opacity duration-300 group-hover:opacity-0">
                   {stage.title}
-                </h2>
-</div>
+                </h2></div>
                 {/* 2. EXPANDING VERTICAL STRIP (Opens from vertical center to 100vh, closes back to center) */}
                 <div
                 className={`

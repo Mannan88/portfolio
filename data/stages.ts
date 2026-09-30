@@ -2,7 +2,7 @@
 export const STAGES = [
   {
     title: "Purpose",
-    desc: "Every build starts with a question, not a tool. Before any code exists I dig into who this is actually for, what problem it removes from their day, and what the end result needs to feel like when it works. Skipping this step is the fastest way to build something technically correct and practically useless.",
+    desc: "Every build starts with a question, not a tool. Before any code exists I dig into who this is actually for, what problem it solves, and what the end result needs to feel like when it works. To skip this step is to build something technically correct and fast, but practically useless.",
     color: "bg-red-500",
   },
   {
@@ -12,22 +12,22 @@ export const STAGES = [
   },
   {
     title: "Resources",
-    desc: "Every project runs inside real constraints — time, tooling, performance budgets, team size. I map those boundaries early so the plan that follows is grounded in what's actually buildable, not a wishlist that quietly collapses two weeks before launch. Constraints found late are just rework found early.",
+    desc: "Every project runs inside real constraints like time, tools, budgets and team size. I map those boundaries early so the plan that follows is grounded in what's actually buildable, and not get buried under a wishlist of features and perfection. Constraints found late are just rework found early.",
     color: "bg-yellow-500",
   },
   {
     title: "Planning",
-    desc: "Ideas become structure here. I break the work into concrete, ordered steps, define the architecture that will hold it all up, and decide what has to happen before what. Sequencing matters as much as scope — most rework I've seen wasn't from a bad idea, it was from doing things in the wrong order.",
+    desc: "Ideas become structure here. I break the work into concrete, ordered steps, define the architecture that will hold it all up, and decide what has to happen before what. Sequencing matters as much as scope. Using notepads, Notion, even pen & paper, I like to divide my task. Most rework I've seen wasn't from a bad idea, it was from doing things unplanned.",
     color: "bg-green-500",
   },
   {
     title: "Create",
-    desc: "This is where the plan meets reality, in tight loops. I build a slice, test it immediately, and adjust the moment something doesn't feel or perform right — rather than building the whole thing blind and debugging it at the end. Momentum matters, but not more than catching a wrong turn early.",
+    desc: "This is where the plan meets reality. I build a slice, get it reviewed immediately, and make adjustments the something doesn't feel or perform right. This loop goes on, keeping the planned schedule in mind. Momentum matters, but not more than catching a wrong turn early.",
     color: "bg-indigo-500",
   },
   {
     title: "Polish",
-    desc: "The last mile is where craft actually shows up. I refine motion curves, spacing, timing, and the dozen tiny details nobody consciously notices but everybody feels. This is what separates something that works from something that feels considered — and it's usually the step that gets cut first when it shouldn't be.",
+    desc: "The last mile is where craft actually shows up. I refine motion, spacing, timing, and the dozen tiny details nobody consciously notices but everybody feels. This is what separates something that works from something that feels considered, and it's usually the step that gets cut first when it shouldn't be. Polishing is a never ending process, but sure is a fun one.",
     color: "bg-violet-500",
   },
 ]
