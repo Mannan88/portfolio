@@ -5,14 +5,13 @@ import { useEffect, useRef, useState } from "react";
 
 const PACKAGE_MANAGERS = ["npm", "pnpm", "yarn"] as const;
 
-// VIBGYOR, used across commands instead of a single accent pair —
-// each command family gets its own color rather than everything
-// funneling into one "success" / "error" binary.
 export type GlowColor = "violet" | "indigo" | "blue" | "green" | "yellow" | "orange" | "red";
 
-type Line =
-  | { id: number; type: "command"; pm: string; raw: string }
-  | { id: number; type: "result"; html: string };
+type LinePayload =
+  | { type: "command"; pm: string; raw: string }
+  | { type: "result"; html: string };
+
+type Line = LinePayload & { id: number };
 
 interface TerminalProps {
   onClose: () => void;
@@ -20,8 +19,6 @@ interface TerminalProps {
   onDoodleTrigger: () => void;
 }
 
-// Colors a "dev" run cycles through — different each time, rather than
-// always landing on the same accent.
 const DEV_RUN_COLORS: GlowColor[] = ["green", "blue", "violet"];
 
 export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: TerminalProps) {
@@ -48,13 +45,20 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
     }
   }, [lines]);
 
-  function print(line: Omit<Line, "id">) {
+  function print(line: LinePayload) {
     const newId = lineIdRef.current++;
-    setLines((prev) => [...prev, { ...line, id: newId }]);
+    setLines((prev) => [...prev, { ...line, id: newId } as Line]);
   }
 
   function updateLine(id: number, newHtml: string) {
-    setLines((prev) => prev.map((l) => (l.id === id ? { ...l, html: newHtml } : l)));
+    setLines((prev) =>
+      prev.map((l) => {
+        if (l.id === id && l.type === "result") {
+          return { ...l, html: newHtml };
+        }
+        return l;
+      })
+    );
   }
 
   function processCommand(cmd: string) {
@@ -129,8 +133,6 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
       return;
     }
 
-    // Dynamic multi-step build simulation — kept, since a failing build with
-    // a real reason is a decent joke on its own without needing test/lint too.
     if (cmd === "build") {
       print({
         type: "result",
@@ -217,7 +219,6 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
       return;
     }
 
-    // Default error fallback
     print({
       type: "result",
       html: `<span class="text-red-500 mt-2 block">Error:</span> Command '${cmd}' not recognized. Type 'help'.`,
