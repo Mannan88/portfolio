@@ -1,17 +1,19 @@
 import type { NextConfig } from "next";
 
+// Replace 'Mannan88' with your actual username and 'repository-name' with your actual repo name if different
+const isProd = process.env.NODE_ENV === 'production';
+// Make sure this exactly matches your repository name on GitHub
+const repoName = "portfolio";
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
-
-  // Required for GitHub Pages static hosting
   output: "export",
   images: {
     unoptimized: true,
   },
-
-  // IMPORTANT: If your repository is named "my-portfolio" and will be hosted at
-  // username.github.io/my-portfolio, you must uncomment and update the line below:
-  // basePath: "/my-portfolio",
+  // Only apply the prefix in production so local development still works
+  basePath: isProd ? `/${repoName}` : '',
+  assetPrefix: isProd ? `/${repoName}/` : '',
 };
 
 export default nextConfig;
