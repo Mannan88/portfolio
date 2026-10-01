@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   creator: "Mannan Kochar",
 
   icons: {
-    icon: "/favicon.ico",
+    icon: `${SITE_URL}/favicon.ico`,
   },
 
   openGraph: {
@@ -55,7 +55,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Mannan Kochar | Creative Developer",
     description: "Bridging the gap between static design and interactive code.",
-    // 3. Twitter Card Image
     images: [`${SITE_URL}/summary_large_image.png`],
   },
 };
