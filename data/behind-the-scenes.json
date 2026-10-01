@@ -1,12 +1,13 @@
 {
   "title": "Behind the Scenes",
   "tagline": "How this portfolio was built.",
-  "date": "2026-01-10",
-  "url": "/",
+  "date": "2026-07-10",
+  "creditsDetail": "Huge credit to Maxime Heckel for inspiration of the background. Check out his blog for more articles.",
+  "creditsUrl": "https://blog.maximeheckel.com/posts/shades-of-halftone/",
   "images": [
-    "/bts/1.jpg",
-    "/bts/2.jpg",
-    "/bts/3.jpg"
+    "/projects/portfolio-1.png",
+    "/projects/portfolio-2.png",
+    "/projects/portfolio-3.jpeg"
   ],
   "content": [
     {
@@ -15,11 +16,11 @@
     },
     {
       "heading": "The Process",
-      "body": "I love when websites show more when interacted with. Hence I wanted to reflect that, and make sure that user's time spent on my portfolio website is absolutely worth it. Hence I planned a lot for this portfolio, thought about how the website should feel, what it should convey, and how the sections would look like. I started with the planning of sections, and what each would display. Starting with hero section, I had that one in my mind, that I wanted to show the word 'PORTFOLIO' and make each letter interactable. Going "
+      "body":"I love when websites show more when interacted with. I wanted to reflect that and make sure the time a user spends on my portfolio is absolutely worth it, so I planned this out carefully, thinking about how the site should feel, what it should convey, and how each section would look.\n\nSection 1 - Hero: I wanted to show the word 'PORTFOLIO' and make each letter interactable. I'd always wanted to try sprite-sheet animation, so I used LibreSprite to meticulously create the animation for each letter, then exported them as WebP with mind-boggling efficiency, the sprite sheet itself is no more than 2kb.\n\nSection 2 - Terminal: I found the terminal interactivity method to be good because it keeps the UI clean and simple, without any unnecessary elements, and lets the user search for the specific info they're looking for.\n\nSection 3 - Shader Sphere: I wanted to try GLSL shaders and Three.js to show the concept of 'polishing over time', where I describe my process while the sphere gains shape and shine.\n\nSection 4 - Projects: I wanted to keep it straightforward and simple, showcasing projects along with their details on sub-pages.\n\nSection 5 - Contact/About: I wanted to show more of 'me' and my work, and let the user know who I am and what I do."
     },
     {
       "heading": "What's Next",
-      "body": "Where this is headed."
+      "body": "I plan to refine my portfolio further, add more interactivity, and make it even more visually appealing and fun to interact with."
     }
   ]
 }

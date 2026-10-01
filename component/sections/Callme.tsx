@@ -16,8 +16,7 @@ export default function Callme() {
 
   useGSAP(
     () => {
-      // Left-anchored content swipes in from the left, right-anchored content
-      // from the right — matches which edge each element actually sits on.
+
       const tl = gsap.timeline({
         defaults: { duration: 0.9, ease: "power3.out" },
         scrollTrigger: {
