@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { images } from "@/data/images"
 import Image from "next/image"
+import { assetPath } from "@/lib/path"
 
 interface BezierCarouselProps {
   className?: string
@@ -234,7 +235,7 @@ export default function BezierCarousel({ className }: BezierCarouselProps) {
       <div ref={stageRef} className="absolute inset-0 pointer-events-none touch-none select-none">
         {renderedImages.map((image) => (
           <div key={image.key} data-alt={image.alt} className="bezier-card pointer-events-auto absolute left-0 top-0 size-40 shrink-0 cursor-grab overflow-hidden rounded-2xl border border-white/15 bg-white/5 shadow-2xl will-change-transform touch-none select-none sm:size-48 md:size-56 lg:size-64">
-            <Image src={image.src} alt={image.alt} height={200} width={200} unoptimized draggable={false} className="pointer-events-none size-full select-none object-cover" />
+            <Image   src={assetPath(image.src)} alt={image.alt} height={200} width={200} unoptimized draggable={false} className="pointer-events-none size-full select-none object-cover" />
           </div>
         ))}
       </div>

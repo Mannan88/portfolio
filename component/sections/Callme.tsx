@@ -7,6 +7,7 @@ import { SOCIALS } from "@/data/socials"
 import Image from "next/image"
 import Link from "next/link"
 import BezierCarousel from "./BeizerCarousel"
+import { assetPath } from "@/lib/path"
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -57,7 +58,7 @@ export default function Callme() {
 
             <span className="flex size-6 shrink-0 items-center justify-center">
               <Image
-                src="/info-circle.svg"
+                 src={assetPath("/info-circle.svg")}
                 alt="behind the scenes"
                 width={20}
                 height={20}

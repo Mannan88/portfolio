@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { PROJECTS, textColorFor } from "@/data/projects"
 import Link from "next/link"
+import { assetPath } from "@/lib/path"
 
 // index 0 of a row's color array = highest z-index = final visible color (see notes above)
 const LAYER_Z_INDEX = ["z-40", "z-30", "z-20", "z-10"]
@@ -71,7 +72,7 @@ export default function Creations() {
     const goingDown = prev === null ? true : index > prev
     const startY = goingDown ? "100%" : "-100%"
 
-    incoming.src = PROJECTS[index].image
+ incoming.src = assetPath(PROJECTS[index].image)
     gsap.set(incoming, { y: startY, zIndex: 20 })
     gsap.set(outgoing, { zIndex: 10 })
     gsap.to(incoming, { y: "0%", duration: 0.6, ease: "power3.out" })

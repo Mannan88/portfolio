@@ -1,8 +1,9 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === 'production';
-// Make sure this exactly matches your repository name on GitHub
+const isProd = process.env.NODE_ENV === "production";
 const repoName = "portfolio";
+const basePath = isProd ? `/${repoName}` : "";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -10,8 +11,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: isProd ? `/${repoName}` : '',
-  assetPrefix: isProd ? `/${repoName}/` : '',
+  basePath,
+  assetPrefix: isProd ? `${basePath}/` : "",
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
 };
 
 export default nextConfig;

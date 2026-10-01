@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
+import { assetPath } from "@/lib/path"
 
 interface BlogSection {
   heading: string
@@ -75,7 +76,7 @@ export default function BlogPost({ title, tagline, date, url, images, content }:
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {images.map((src, index) => (
             <div key={index} className={`blog-image relative aspect-video overflow-hidden rounded-xl ${index === 0 ? "sm:col-span-2" : ""}`}>
-              <Image src={src} alt={`${title} snapshot ${index + 1}`} fill className="object-cover" />
+              <Image   src={assetPath(src)} alt={`${title} snapshot ${index + 1}`} fill className="object-cover" />
             </div>
           ))}
         </div>

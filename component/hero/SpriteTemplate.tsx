@@ -1,4 +1,5 @@
 "use client";
+import { assetPath } from "@/lib/path";
 import { CSSProperties, useEffect, useRef } from "react";
 
 interface SpriteProps {
@@ -66,7 +67,7 @@ export default function Sprite({
   };
 
   const spriteStyle = {
-    backgroundImage: `url(${src})`,
+    backgroundImage: `url(${assetPath(src)})`,
     width: `${finalWidth}px`,
     height: `${totalSpriteHeight}px`,
     backgroundSize: `${finalWidth}px ${totalSpriteHeight}px`,
