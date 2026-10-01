@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/component/shared/Navbar";
 import HalftoneBackground from "@/component/backgrounds/halftone-bg/HalfToneBg";
+import MobileNotice from "@/component/MobileNotice";
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://mannan.dev", // Replace with your actual URL
+    url: "https://mannan88.github.io/portfolio/",
     title: "Mannan Kochar | Creative Developer",
     description: "Bridging the gap between static design and interactive code. View my projects and skills.",
     siteName: "Mannan Kochar Portfolio",
@@ -47,6 +48,7 @@ export default function RootLayout({
       className={`antialiased scroll-smooth`}
     >
       <body className="bg-(--bg-color) text-[#0E0E0E] relative cursor-none">
+        <MobileNotice />
         <HalftoneBackground gridSize={64} radius={0.12} bgColor="#1e1e1e" dotColor="#717174">
           <Navbar />
           <main>{children}</main>
