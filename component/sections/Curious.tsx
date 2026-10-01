@@ -219,6 +219,12 @@ const [glow, setGlow] = useState<GlowColor | null>(null);
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (glowTimeout.current) clearTimeout(glowTimeout.current);
+    };
+  }, []);
+
   const handleGlowChange = (type: GlowColor | null) => {
     if (glowTimeout.current) {
       clearTimeout(glowTimeout.current);

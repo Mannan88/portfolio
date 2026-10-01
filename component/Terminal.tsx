@@ -61,10 +61,28 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
     );
   }
 
+  const activeTimeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    return () => {
+      activeTimeouts.current.forEach(clearTimeout);
+    };
+  }, []);
+
+  const safeSetTimeout = (cb: () => void, delay: number) => {
+    const id = setTimeout(() => {
+      cb();
+      activeTimeouts.current = activeTimeouts.current.filter((t) => t !== id);
+    }, delay);
+    activeTimeouts.current.push(id);
+  };
+
   function processCommand(cmd: string) {
     if (cmd === "clear") {
       setLines([]);
       onGlowChange(null);
+      activeTimeouts.current.forEach(clearTimeout);
+      activeTimeouts.current = [];
       return;
     }
 
@@ -143,15 +161,15 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
       const progressId = lineIdRef.current++;
       setLines((prev) => [...prev, { id: progressId, type: "result", html: `[░░░░░░░░░░] 0% compiling...` }]);
 
-      setTimeout(() => {
+      safeSetTimeout(() => {
         updateLine(progressId, `[████░░░░░░] 42% optimizing chunks...`);
       }, 600);
 
-      setTimeout(() => {
+      safeSetTimeout(() => {
         updateLine(progressId, `[█████████░] 99% generating static pages...`);
       }, 1400);
 
-      setTimeout(() => {
+      safeSetTimeout(() => {
         onGlowChange("red");
         print({
           type: "result",
@@ -195,20 +213,20 @@ export default function Terminal({ onClose, onGlowChange, onDoodleTrigger }: Ter
         html: `Mannan is sleeping.<span class="syntax-function mt-2 block">Zzz...</span>`,
       });
 
-      setTimeout(() => {
+      safeSetTimeout(() => {
         print({
           type: "result",
           html: `<span class="syntax-function mt-2 block">Zzz...Zzz...</span>`,
         });
       }, 600);
 
-      setTimeout(() => {
+      safeSetTimeout(() => {
         print({
           type: "result",
           html: `<span class="syntax-function mt-2 block">Zzz...Zzz...Zzz...</span>`,
         });
       }, 1400);
-      setTimeout(() => {
+      safeSetTimeout(() => {
         print({
           type: "result",
           html: `<span class="syntax-function mt-2 block">He sure loves sleeping.</span>`,

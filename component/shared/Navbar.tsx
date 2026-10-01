@@ -104,7 +104,7 @@ export default function Navbar() {
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div ref={containerRef} className="fixed z-999 bottom-4 left-4 font-mono perspective-1000">
+    <div ref={containerRef} className="fixed z-999 bottom-4 left-4 perspective-1000">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         aria-label={isOpen ? "Close Navigation" : "Toggle Navigation"}
@@ -161,7 +161,7 @@ export default function Navbar() {
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           ) : (
-            <span className="text-sm tracking-widest bg-linear-to-br from-white via-slate-300 to-slate-500 bg-clip-text text-transparent">
+            <span className="text-md bg-linear-to-br from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
               MK
             </span>
           )}

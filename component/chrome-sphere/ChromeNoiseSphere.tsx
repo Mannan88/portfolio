@@ -222,7 +222,7 @@ const ChromeNoiseSphere = forwardRef<ChromeNoiseSphereHandle, ChromeNoiseSphereP
         resizeObserver.disconnect();
         geometry.dispose();
         material.dispose();
-        envRenderTarget.texture.dispose();
+        envRenderTarget.dispose();
         pmremGenerator.dispose();
         renderer.dispose();
         renderer.domElement.remove();
