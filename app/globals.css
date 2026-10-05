@@ -49,22 +49,6 @@ body {
   to   { transform: translateY(var(--total-height)); }
 }
 
-.easter-egg-doodle {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  width: 60px;
-  height: 60px;
-  background-color: var(--accent-pink);
-  border-radius: 50% 50% 0 0;
-  z-index: 0;
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform: translateY(100%);
-}
-.easter-egg-doodle.peek {
-  transform: translateY(-40px);
-}
-
 .terminal-container {
 background-color: var(--terminal-bg);
   border: 2px solid var(--terminal-border);

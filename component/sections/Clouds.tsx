@@ -53,9 +53,9 @@ export default function Clouds() {
     <section
       ref={sectionRef}
       id="clouds"
-      className="w-full h-dvh"
+      className="w-full min-h-dvh [--s:5] [--crop:1] md:[--s:4] md:[--crop:0] lg:[--s:8]"
     >
-      <div className="flex items-center mt-24 w-full justify-center">
+      <div className="mt-16 md:mt-24 grid grid-cols-[repeat(3,max-content)] justify-center gap-y-4 md:flex md:justify-center md:gap-0 md:items-center">
         <div className="portfolio-letter">
           <Sprite
             src="/section_one_letters/letter-p-v2.webp"
@@ -151,7 +151,7 @@ export default function Clouds() {
         </div>
       </div>
 
-      <div className="flex justify-end mt-12 px-20">
+      <div className="sm:flex hidden justify-end mt-12 px-8 md:px-20">
         <p className="clouds-copy text-xs text-justify text-[#c1c1c1] uppercase max-w-70 font-light tracking-wider">
           [ REF // MANIFESTO ] — 2026 // WHILE THE
           ENVIRONMENT OPTIMIZES FOR STANDARDIZED LABOUR, MASS-RECRUITER LOOPS, AND GENERIC API WRAPPERS, MY CORE OBJECTIVE REMAINS COMPLETELY UNCHANGED. LET THE NOISE DICTATE THE BASELINE; I WORK IN THE EXCEPTIONS. ENGINEERING HIGH-FIDELITY INTERACTION, CUSTOM SHADERS, AND DIGITAL ATMOSPHERE ISN&apos;T A VARIABLE DEPENDENT

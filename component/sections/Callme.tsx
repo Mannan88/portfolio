@@ -86,7 +86,7 @@ export default function Callme() {
                   style={{ ["--hover-color" as string]: social.color }}
                 >
                   <span className="h-2 w-2 rounded-full bg-[#888888] transition-colors duration-300 group-hover:bg-(--hover-color)" />
-                  <span className="text-lg px-2 transition-colors duration-300 group-hover:bg-(--hover-color)">
+                  <span className="md:text-lg text-md px-2 transition-colors duration-300 group-hover:bg-(--hover-color)">
                     {social.label}
                   </span>
                   {social.note && (
