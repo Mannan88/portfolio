@@ -5,7 +5,7 @@ import HalftoneBackground from "@/component/backgrounds/halftone-bg/HalfToneBg";
 //import MobileNotice from "@/component/MobileNotice";
 
 // Define your base URL once to easily construct absolute paths for images
-const SITE_URL = "https://mannan88.github.io/portfolio";
+const SITE_URL = "https://mannankochar.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   creator: "Mannan Kochar",
 
   icons: {
-    icon: `${SITE_URL}/favicon.ico`,
+    icon: "/favicon.ico",
   },
 
   openGraph: {
