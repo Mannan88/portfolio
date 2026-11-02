@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/component/shared/Navbar";
 import HalftoneBackground from "@/component/backgrounds/halftone-bg/HalfToneBg";
-//import MobileNotice from "@/component/MobileNotice";
-
-// Define your base URL once to easily construct absolute paths for images
 const SITE_URL = "https://mannankochar.in";
 
 export const metadata: Metadata = {
